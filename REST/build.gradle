@@ -1,0 +1,13 @@
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    compile 'junit:junit:4.12'
+    compile 'io.rest-assured:scala-support:3.0.7'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.9.5'
+}
+
