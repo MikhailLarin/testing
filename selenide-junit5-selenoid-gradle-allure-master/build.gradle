@@ -1,0 +1,122 @@
+import java.util.jar.JarEntry
+
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.junit.platform.gradle.plugin'
+apply plugin: 'io.qameta.allure'
+
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+
+
+    }
+    dependencies {
+        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.1.0'
+        classpath 'io.qameta.allure:allure-gradle:2.4'
+
+    }
+}
+
+
+
+allure {
+    version = '2.4.1'
+    autoconfigure = true
+    aspectjweaver = true
+    aspectjVersion = '1.8.10'
+}
+
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven { url 'https://jitpack.io' }
+}
+
+
+
+
+
+
+dependencies {
+    compile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.1.0'
+    compile 'org.assertj:assertj-core:3.9.0'
+    compile 'com.codeborne:selenide:4.10.01'
+    compile 'io.qameta.allure:allure-junit5:2.6.0'
+    compile 'io.qameta.allure:allure-selenide:2.0-BETA22'
+    compile 'org.junit.jupiter:junit-jupiter-params:5.1.0'
+    compile 'org.junit.platform:junit-platform-suite-api:1.1.0'
+    compile 'org.junit.platform:junit-platform-runner:1.1.0'
+    compile 'org.slf4j:slf4j-api:1.6.1'
+    compile 'org.slf4j:slf4j-simple:1.6.1'
+    compile 'org.junit.jupiter:junit-jupiter-engine:5.1.0'
+    compile 'org.junit.jupiter:junit-jupiter-api:5.1.0'
+    compile 'com.google.code.gson:gson:2.8.2'
+    compile 'org.jacoco:jacoco-maven-plugin:0.8.1'
+    compile 'com.github.Wreulicke:junit5-params:0.0.1-RC2'
+}
+
+
+
+task fast (type: Test) {
+
+
+    useJUnitPlatform {
+
+        includeTags 'fast'
+    }
+
+        failFast = true
+}
+
+
+
+
+task slowMethod (type: Test) {
+    systemProperties = [
+     'param_name': System.getProperty('param')
+    ]
+
+
+    useJUnitPlatform {
+        includeTags 'slowMethod'
+    }
+}
+
+task fastMethod (type: Test) {
+
+    useJUnitPlatform {
+
+        excludeTags 'slowMethod'
+    }
+
+    failFast = true
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+task wrapper(type: Wrapper) {
+    gradleVersion '4.6'
+}
+
