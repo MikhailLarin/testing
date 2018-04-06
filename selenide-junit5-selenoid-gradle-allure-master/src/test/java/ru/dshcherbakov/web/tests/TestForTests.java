@@ -10,7 +10,7 @@ import static com.codeborne.selenide.Selenide.$;
 public class TestForTests extends TestBase {
 
     @Test
-
+    @Tag("drugoe")
     void test(){
         $("#lst-ib").setValue("cars").pressEnter();
         $("#rso").shouldHave(text("cars"));
