@@ -15,7 +15,7 @@ public class FirstTest extends CompositeAnnotations {
     void test1() {
 
         System.out.println("FirstTest");
-        
+        System.out.println("FirstTest");
 
     }
 
