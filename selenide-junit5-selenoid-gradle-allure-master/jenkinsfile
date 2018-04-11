@@ -1,0 +1,37 @@
+pipeline {
+    agent any
+
+    stages {
+        stage ('Git') {
+           steps {
+              git credentialsId: '89ad40ad-9415-42a7-9d65-d9f44cb7607b', url: 'https://github.com/MikhailLarin/testing'
+           }
+        }
+        stage ('Build Test') {
+           steps {
+              build job: 'junit', quietPeriod: 0
+           }
+
+        }
+        stage ('Generate Allure') {
+           steps {
+              allure jdk: 'JDK', report: '/home/localuser/testing/selenide-junit5-selenoid-gradle-allure-master/build/reports/allure-report', results: [[path: '/selenide-junit5-selenoid-gradle-allure-master/allure-results']]
+           }
+        }
+        stage ('Email Message') {
+           steps {
+              emailext body: 'Тест выполнен', subject: 'Прогон Теста', to: 'mixa-larin98@yandex.ru'
+           }
+
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
