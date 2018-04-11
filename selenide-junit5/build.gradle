@@ -1,3 +1,5 @@
+import java.util.jar.JarEntry
+
 
 apply plugin: 'java'
 apply plugin: 'idea'
@@ -19,23 +21,26 @@ buildscript {
 
 
 
-
-
+allure {
+    version = '2.4.1'
+    autoconfigure = true
+    aspectjweaver = true
+    aspectjVersion = '1.8.10'
+}
 
 
 repositories {
     mavenCentral()
     jcenter()
-
 }
 
 
 
-
 dependencies {
-    compile 'io.qameta.allure:allure-gradle:2.4'
+    compile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.1.0'
     compile 'org.assertj:assertj-core:3.9.0'
     compile 'com.codeborne:selenide:4.10.01'
+    compile 'io.qameta.allure:allure-gradle:2.4'
     compile 'io.qameta.allure:allure-junit5:2.6.0'
     compile 'io.qameta.allure:allure-selenide:2.0-BETA22'
     compile 'org.junit.jupiter:junit-jupiter-params:5.1.0'
@@ -45,22 +50,22 @@ dependencies {
     compile 'org.slf4j:slf4j-simple:1.6.1'
     compile 'org.junit.jupiter:junit-jupiter-engine:5.1.0'
     compile 'org.junit.jupiter:junit-jupiter-api:5.1.0'
+
 }
 
 
 allure {
     version = '2.4.1'
+    autoconfigure = true
     aspectjweaver = true
-    String allureJavaVersion = '2.0-BETA9'
-    boolean clean = true
-    resultsDir = file('/home/localuser/testing/selenide-junit5-selenoid-gradle-allure-master/allure-results')
-    reportDir = file('build/reports/allure-report')
-    String configuration = 'compile'
+    aspectjVersion = '1.8.10'
 
-    useJUnit5 {
-        version = '2.0-BETA21'
-    }
-    downloadLink = 'https://dl.bintray.com/qameta/generic/io/qameta/allure/allure/2.4.1/allure-2.4.1.zip'
+
+
+   useJUnit5 {
+       version = '2.0-BETA21'
+   }
+
 }
 
 
@@ -74,7 +79,7 @@ task fast (type: Test) {
         includeTags 'fast'
     }
 
-    failFast = true
+        failFast = true
 }
 
 
@@ -82,7 +87,7 @@ task fast (type: Test) {
 
 task slowMethod (type: Test) {
     systemProperties = [
-            'param_name': System.getProperty('param')
+     'param_name': System.getProperty('param')
     ]
 
 
@@ -95,12 +100,13 @@ task fastMethod (type: Test) {
 
     useJUnitPlatform {
 
-        excludeTags 'slowMethod' , 'drugoe'
+        excludeTags 'slowMethod', 'drugoe'
     }
 
     failFast = true
 
 }
+
 
 
 
